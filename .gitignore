@@ -1,0 +1,24 @@
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+
+# Ignore large downloaded datasets
+data/
+
+# Ignore local plot outputs
+top_genes_plots/
+
+# Ignore scratch scripts and json dumps
+test_*.py
+tmp_*.py
+list_*.py
+erbb2_tcga_gtex_expression.py
+fetch_surface_genes.py
+score_surface_selectivity.py
+score_surface_selectivity_v2.py
+*.json
+
+# DO NOT IGNORE the compiled outputs needed for production
+!surface_selectivity_scores.csv
+!surface_genes.txt
