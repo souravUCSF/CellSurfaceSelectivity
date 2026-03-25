@@ -224,33 +224,6 @@ def api_expression(gene: str):
     except ValueError as e: return JSONResponse(status_code=404, content={"detail": str(e)})
     except Exception as e: return JSONResponse(status_code=500, content={"detail": f"Internal error: {e}"})
 
-@app.get("/api/top_targets")
-def api_top_targets():
-    csv_path = "surface_selectivity_scores.csv"
-    if not os.path.exists(csv_path):
-        return JSONResponse(status_code=404, content={"detail": "Selectivity scores not found."})
-    df = pd.read_csv(csv_path)
-    df = df.replace({np.nan: None})
-    return JSONResponse(content=df.to_dict(orient="records"))
-
-@app.get("/api/download_csv")
-def api_download_csv():
-    csv_path = "surface_selectivity_scores.csv"
-    if not os.path.exists(csv_path):
-        return JSONResponse(status_code=404, content={"detail": "CSV not found."})
-        
-    df = pd.read_csv(csv_path)
-    if os.path.exists("surface_genes.txt"):
-        with open("surface_genes.txt", "r") as f:
-            surface_genes = set([line.strip() for line in f if line.strip()])
-        df["Is_Surface_Protein"] = df["Gene"].apply(lambda x: "Yes" if x in surface_genes else "No")
-    
-    stream = io.StringIO()
-    df.to_csv(stream, index=False)
-    response = StreamingResponse(iter([stream.getvalue()]), media_type="text/csv")
-    response.headers["Content-Disposition"] = "attachment; filename=surface_selectivity_scores.csv"
-    return response
-
 @app.get("/api/surface_genes")
 def api_surface_genes():
     if not os.path.exists("surface_genes.txt"):

@@ -46,94 +46,9 @@
             </div>
         </header>
 
-        <!-- New Selectivity Targets Table -->
-        <section id="targets-container" class="glass-panel">
-            <div class="table-header-controls">
-                <h2>Cell Surface Selectivity Targets</h2>
-                <div class="filters">
-                    <input type="text" id="filter-gene" class="table-filter" placeholder="Filter by Gene..." autocomplete="off">
-                    <input type="text" id="filter-tumor" class="table-filter" placeholder="Filter by Tumor Type..." autocomplete="off">
-                    <label style="display: flex; align-items: center; gap: 6px; color: white; user-select: none; font-size: 0.9em; margin-right: 15px;">
-                        <input type="checkbox" id="filter-surface-only">
-                        Surface Proteins Only
-                    </label>
-                    <a href="#" class="download-btn" id="download-csv-btn">
-                        <svg viewBox="0 0 24 24" fill="none" class="icon" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                            <polyline points="7 10 12 15 17 10"></polyline>
-                            <line x1="12" y1="15" x2="12" y2="3"></line>
-                        </svg>
-                        Download Full Dataset
-                    </a>
-                </div>
-                
-                <div class="numeric-filters" style="display: flex; flex-wrap: wrap; gap: 20px; margin-top: 15px; color: #cbd5e1; font-size: 0.85em; background: rgba(30, 41, 59, 0.5); padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);">
-                    <div style="display: flex; flex-direction: column; gap: 4px; min-width: 140px;">
-                        <label style="display: flex; justify-content: space-between;"><span>Min Score</span> <span id="val-score" style="color:white; font-weight:600;">0</span></label>
-                        <input type="range" id="filter-score" min="0" max="25" step="0.5" value="0">
-                    </div>
-                    <div style="display: flex; flex-direction: column; gap: 4px; min-width: 140px;">
-                        <label style="display: flex; justify-content: space-between;"><span>Min Tumor Tau</span> <span id="val-tau" style="color:white; font-weight:600;">0</span></label>
-                        <input type="range" id="filter-tau" min="0" max="1" step="0.05" value="0">
-                    </div>
-                    <div style="display: flex; flex-direction: column; gap: 4px; min-width: 140px;">
-                        <label style="display: flex; justify-content: space-between;"><span>Max p-value</span> <span id="val-pval" style="color:white; font-weight:600;">1.0</span></label>
-                        <input type="range" id="filter-pval" min="0" max="1" step="0.01" value="1.0">
-                    </div>
-                    <div style="display: flex; flex-direction: column; gap: 4px; min-width: 140px;">
-                        <label style="display: flex; justify-content: space-between;"><span>Min T_max (log2)</span> <span id="val-tmax" style="color:white; font-weight:600;">-10</span></label>
-                        <input type="range" id="filter-tmax" min="-10" max="15" step="0.5" value="-10">
-                    </div>
-                    <div style="display: flex; flex-direction: column; gap: 4px; min-width: 140px;">
-                        <label style="display: flex; justify-content: space-between;"><span>Max N_max (log2)</span> <span id="val-nmax" style="color:white; font-weight:600;">15</span></label>
-                        <input type="range" id="filter-nmax" min="-10" max="15" step="0.5" value="15">
-                    </div>
-                    <div style="display: flex; flex-direction: column; gap: 4px; min-width: 140px;">
-                        <label style="display: flex; justify-content: space-between;"><span>Min Delta_TN</span> <span id="val-delta" style="color:white; font-weight:600;">0</span></label>
-                        <input type="range" id="filter-delta" min="0" max="25" step="0.5" value="0">
-                    </div>
-                </div>
-            </div>
-            
-            <div class="table-responsive" style="max-height: 600px; overflow-y: auto;">
-                <table id="main-targets-table" class="interactive-table">
-                    <thead>
-                        <tr>
-                            <th data-sort="Gene" class="sortable">Gene Target <span class="sort-icon"></span></th>
-                            <th data-sort="Score" class="sortable">Selectivity Score <span class="sort-icon"></span></th>
-                            <th data-sort="Score_T_AdjN" class="sortable">Score T_AdjN <span class="sort-icon"></span></th>
-                            <th data-sort="max_tumor_type" class="sortable">Max Tumor Type <span class="sort-icon"></span></th>
-                            <th data-sort="p_adj" class="sortable">p-value (FDR) <span class="sort-icon"></span></th>
-                            <th data-sort="Tumor_Tau" class="sortable">Tumor Tau <span class="sort-icon"></span></th>
-                            <th data-sort="T_max" class="sortable">T_max <span class="sort-icon"></span></th>
-                            <th data-sort="N_max" class="sortable">N_max <span class="sort-icon"></span></th>
-                            <th data-sort="Delta_TN" class="sortable">Delta_TN <span class="sort-icon"></span></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Rows will be populated by JS -->
-                    </tbody>
-                </table>
-            </div>
-            
-            <div class="pagination-controls hidden" id="pagination-controls">
-                <button id="page-prev" class="page-btn" disabled>&laquo; Prev</button>
-                <span id="page-info">Page 1 of 1</span>
-                <button id="page-next" class="page-btn">Next &raquo;</button>
-            </div>
-
-            <!-- Scatter Plot Container -->
-            <div id="targets-plot-container" style="margin-top: 3.5rem;">
-                <h3 style="margin-bottom: 1rem; color: #f8fafc; font-weight: 600; border-left: 4px solid var(--accent); padding-left: 0.75rem;">Selectivity Landscape</h3>
-                <div id="targets-plotly-div" style="width: 100%; height: 500px;"></div>
-            </div>
-        </section>
-
-        <section id="results-container" class="glass-panel hidden results-panel">
-            <div class="results-action-bar">
-                <button id="back-to-table-btn" class="secondary-btn">&larr; Back to Targets</button>
-            </div>
-            <div id="loading-spinner" class="hidden loading-wrapper">
+        <!-- Main Search Results Container -->
+        <section id="results-container" class="glass-panel results-panel" style="margin-top: 2rem;">
+            <div id="loading-spinner" class="hidden loading-wrapper" style="margin: 3rem 0;">
                 <div class="spinner"></div>
                 <h2>Fetching Expression Data...</h2>
                 <p><small>(Initial server cache generation may take ~20 seconds)</small></p>
